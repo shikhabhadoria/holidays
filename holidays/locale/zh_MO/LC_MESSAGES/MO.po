@@ -14,11 +14,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Holidays 0.81\n"
+"Project-Id-Version: Holidays 0.109\n"
 "Report-Msgid-Bugs-To: l10n@vacanza.dev\n"
 "POT-Creation-Date: 2025-02-06 15:34+0700\n"
-"PO-Revision-Date: 2025-09-07 14:05+0300\n"
-"Last-Translator: ~Jhellico <jhellico@gmail.com>\n"
+"PO-Revision-Date: 2026-11-09 15:55+0530\n"
+"Last-Translator: Shikha Bhadoria <shikhabhadoria9@gmail.com>\n"
 "Language-Team: Holidays Localization Team\n"
 "Language: zh_MO\n"
 "MIME-Version: 1.0\n"
@@ -31,6 +31,16 @@ msgstr ""
 #. %s (estimated).
 #, c-format
 msgid "%s（推定）"
+msgstr ""
+
+#. Compensatory rest day for %s.
+#, c-format
+msgid "%s的補假"
+msgstr ""
+
+#. Compensatory rest day for %s (estimated).
+#, c-format
+msgid "%s的補假（推定）"
 msgstr ""
 
 #. New Year's Day.
@@ -186,19 +196,9 @@ msgstr ""
 msgid "除夕"
 msgstr ""
 
-#. Compensatory rest day for %s.
-#, c-format
-msgid "%s的補假"
-msgstr ""
-
 #. The first working day after %s.
 #, c-format
 msgid "%s後首個工作日"
-msgstr ""
-
-#. Compensatory rest day for %s (estimated).
-#, c-format
-msgid "%s的補假（推定）"
 msgstr ""
 
 #. The first working day after %s (estimated).

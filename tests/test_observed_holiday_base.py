@@ -12,6 +12,7 @@
 
 from datetime import date
 from unittest import TestCase
+from unittest.mock import call, patch
 
 from holidays.calendars.gregorian import MON, SUN
 from holidays.observed_holiday_base import ObservedHolidayBase, ObservedRule
@@ -54,3 +55,43 @@ class TestObservedHolidayBase(TestCase):
             },
             self.ohb,
         )
+
+    def _add_estimated_observed(self, estimated_label, observed_label, observed_estimated_label):
+        ohb = ObservedHolidayBase(observed_rule=ObservedRule({SUN: +1}))
+        ohb.estimated_label = estimated_label
+        ohb.observed_label = observed_label
+        ohb.observed_estimated_label = observed_estimated_label
+        ohb._populate(2024)
+        ohb._add_observed(ohb._add_holiday(estimated_label % "Test Holiday", self.SUNDAY))
+        return ohb
+
+    def test_observed_estimated_label(self):
+        self.assertEqual(
+            dict(
+                self._add_estimated_observed(
+                    "%s (estimated)", "%s (observed)", "%s (observed, estimated)"
+                )
+            ),
+            {
+                self.SUNDAY: "Test Holiday (estimated)",
+                self.MONDAY: "Test Holiday (observed, estimated)",
+            },
+        )
+
+    def test_observed_estimated_label_fullwidth_parentheses(self):
+        self.assertEqual(
+            dict(self._add_estimated_observed("%s（推定）", "%s（补假）", "%s（补假，推定）")),
+            {
+                self.SUNDAY: "Test Holiday（推定）",
+                self.MONDAY: "Test Holiday（补假，推定）",
+            },
+        )
+
+    def test_observed_without_estimated_label(self):
+        with patch.object(self.ohb, "tr", wraps=self.ohb.tr) as tr:
+            self.ohb._add_observed(
+                self.ohb._add_holiday("Test Holiday", self.MONDAY), rule=self.MON_TO_TUE
+            )
+
+        self.assertNotIn(call(""), tr.call_args_list)
+        self.assertEqual(self.ohb[date(2024, 5, 14)], "Test Holiday (Observed Label)")

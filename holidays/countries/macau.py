@@ -64,6 +64,10 @@ class Macau(
     default_language = "zh_MO"
     # %s (estimated).
     estimated_label = tr("%s（推定）")
+    # Compensatory rest day for %s.
+    observed_label = tr("%s的補假")
+    # Compensatory rest day for %s (estimated).
+    observed_estimated_label = tr("%s的補假（推定）")
     # Decreto-Lei n.º 4/82/M.
     start_year = 1982
     subdivisions = (

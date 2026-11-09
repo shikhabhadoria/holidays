@@ -297,7 +297,9 @@ class ObservedHolidayBase(HolidayBase):
             return False, None
 
         if show_observed_label:
-            estimated_label = self.tr(getattr(self, "estimated_label", ""))
+            # Translating an empty string returns the catalog metadata, so skip it.
+            estimated_label = getattr(self, "estimated_label", "")
+            estimated_label = self.tr(estimated_label) if estimated_label else ""
             observed_label = self.tr(
                 getattr(
                     self,
@@ -312,7 +314,11 @@ class ObservedHolidayBase(HolidayBase):
                 holiday_name = self.tr(name)
                 observed_estimated_label = None
                 if estimated_label_text and estimated_label_text in holiday_name:
-                    holiday_name = holiday_name.replace(f"({estimated_label_text})", "").strip()
+                    holiday_name = (
+                        holiday_name.replace(f"({estimated_label_text})", "")
+                        .replace(f"（{estimated_label_text}）", "")
+                        .strip()
+                    )
                     observed_estimated_label = self.tr(self.observed_estimated_label)
 
                 super()._add_holiday(
